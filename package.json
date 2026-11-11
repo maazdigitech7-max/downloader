@@ -1,0 +1,19 @@
+{
+  "name": "instasave",
+  "version": "1.0.0",
+  "description": "InstaSave (Vercel edition) - download Instagram media you own or are authorized to access, plus an in-memory image converter.",
+  "private": true,
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "node --watch dev-server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "sharp": "^0.35.4"
+  },
+  "license": "MIT"
+}
