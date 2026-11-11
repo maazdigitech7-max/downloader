@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstaSave – Instagram Downloader for your own Reels, videos &amp; photos</title>
+  <meta name="description" content="Download Instagram Reels, videos, photos and carousels from accounts you own or are authorized to access, or upload your own media to download and convert it.">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M32 16v22m0 0-9-9m9 9 9-9M20 48h24' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/js/validators.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body>
+
+<!-- Icon sprite -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="InstaSave home">
+      <span class="logo-mark"><svg class="icon"><use href="#i-download"/></svg></span>
+      <span class="logo-text">Insta<span>Save</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg class="icon icon-menu"><use href="#i-menu"/></svg>
+      <svg class="icon icon-close"><use href="#i-x"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#about">About Us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"><span class="blob blob-a"></span><span class="blob blob-b"></span></div>
+    <div class="container hero-inner">
+      <p class="eyebrow reveal"><svg class="icon"><use href="#i-shield"/></svg> Official-API based · No scraping</p>
+      <h1 class="reveal">Instagram Downloader</h1>
+      <p class="subtitle reveal">Download Instagram Reels, videos, and photos easily.</p>
+      <p class="hero-note reveal">Works with media from accounts you own or are authorized to access.</p>
+
+      <div class="card tool reveal">
+        <div class="tabs" role="tablist" aria-label="Download method">
+          <button class="tab is-active" role="tab" id="tab-link" aria-selected="true" aria-controls="panel-link" data-tab="link" type="button">
+            <svg class="icon"><use href="#i-link"/></svg> From link
+          </button>
+          <button class="tab" role="tab" id="tab-upload" aria-selected="false" aria-controls="panel-upload" data-tab="upload" type="button" tabindex="-1">
+            <svg class="icon"><use href="#i-upload"/></svg> Upload a file
+          </button>
+        </div>
+
+        <!-- Link tab -->
+        <div class="panel" id="panel-link" role="tabpanel" aria-labelledby="tab-link">
+          <div class="connect-bar" id="connectBar" hidden></div>
+          <form id="urlForm" novalidate>
+            <label class="sr-only" for="urlInput">Instagram URL</label>
+            <div class="input-row">
+              <div class="input-wrap">
+                <svg class="icon input-icon"><use href="#i-instagram"/></svg>
+                <input id="urlInput" name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false"
+                       placeholder="Paste an Instagram post, reel or video link" aria-describedby="message">
+                <button class="paste-btn" id="pasteBtn" type="button"><svg class="icon"><use href="#i-clipboard"/></svg><span>Paste</span></button>
+              </div>
+              <button class="btn btn-primary btn-lg" id="submitBtn" type="submit">
+                <span class="spinner" aria-hidden="true"></span>
+                <svg class="icon btn-icon"><use href="#i-download"/></svg>
+                <span class="btn-label">Download</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Upload tab -->
+        <div class="panel" id="panel-upload" role="tabpanel" aria-labelledby="tab-upload" hidden>
+          <div class="dropzone" id="dropZone">
+            <svg class="icon dz-icon"><use href="#i-upload"/></svg>
+            <p class="dz-title">Drop your photo or video here</p>
+            <p class="dz-sub" id="dzHint">JPG, PNG, WebP, GIF, MP4, MOV or WebM</p>
+            <label class="btn btn-secondary" for="fileInput">Choose file</label>
+            <input id="fileInput" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm">
+          </div>
+          <div class="progress" id="uploadProgress" hidden role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="progress-bar" id="progressBar"></span>
+          </div>
+        </div>
+
+        <div class="message" id="message" role="status" aria-live="polite" hidden></div>
+      </div>
+
+      <div class="results" id="results" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 class="section-title reveal">Built to be simple and safe</h2>
+      <p class="section-sub reveal">Everything you need to save your own Instagram media, nothing you don't.</p>
+      <div class="grid features">
+        <article class="feature reveal"><span class="feature-icon"><svg class="icon"><use href="#i-pointer"/></svg></span><h3>Easy to use</h3><p>Paste a link, press Download. Carousels show every slide so you can pick what you need.</p></article>
+        <article class="feature reveal"><span class="feature-icon"><svg class="icon"><use href="#i-phone"/></svg></span><h3>Mobile friendly</h3><p>A layout designed for phones first, with large tap targets and a simple upload flow.</p></article>
+        <article class="feature reveal"><span class="feature-icon"><svg class="icon"><use href="#i-key"/></svg></span><h3>No password sharing</h3><p>We never see your Instagram password. Access goes through Instagram's official authorization, and the upload tool needs no account at all.</p></article>
+        <article class="feature reveal"><span class="feature-icon"><svg class="icon"><use href="#i-zap"/></svg></span><h3>Fast processing</h3><p>Media is streamed straight to you in its original quality. Uploads convert in seconds.</p></article>
+        <article class="feature reveal"><span class="feature-icon"><svg class="icon"><use href="#i-shield"/></svg></span><h3>Secure media handling</h3><p>Files are validated by content, stored under unguessable names and automatically deleted after a short time.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section section-tint" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title reveal">How it works</h2>
+      <p class="section-sub reveal">Four steps from link to file.</p>
+      <ol class="steps">
+        <li class="step reveal"><span class="step-num">1</span><h3>Connect your account</h3><p>Sign in through Instagram's official authorization window. This gives InstaSave read-only access to your own media. Using only the upload tool? Skip this step.</p></li>
+        <li class="step reveal"><span class="step-num">2</span><h3>Paste the link</h3><p>Copy the link of one of your Reels, videos, photos or carousels and paste it into the box.</p></li>
+        <li class="step reveal"><span class="step-num">3</span><h3>Preview</h3><p>InstaSave finds the post in your account and shows a preview with the available formats.</p></li>
+        <li class="step reveal"><span class="step-num">4</span><h3>Download</h3><p>Download the original file, or each slide of a carousel. You can also upload a file and convert it to another format.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container narrow">
+      <h2 class="section-title reveal">Frequently asked questions</h2>
+      <div class="faq">
+        <details class="reveal"><summary>Can I download any public Instagram post?</summary><p>No. Instagram's official API only lets an app read media from the account that authorized it. InstaSave therefore works for your own posts (and accounts you are authorized to manage). It does not bypass privacy settings and cannot fetch other people's posts.</p></details>
+        <details class="reveal"><summary>Do I need to log in?</summary><p>For link downloads you authorize InstaSave once through Instagram's own login window. We never receive your password. The upload tool needs no login.</p></details>
+        <details class="reveal"><summary>Which Instagram accounts are supported?</summary><p>The official Instagram API supports professional accounts (Business or Creator). Personal accounts can switch to a professional account for free in the Instagram app settings. You can always use the upload tool with files saved on your device.</p></details>
+        <details class="reveal"><summary>Why can't I find an older post?</summary><p>InstaSave searches the most recent posts of the connected account. Very old posts can fall outside that range, and Instagram may withhold the file for posts containing copyrighted audio.</p></details>
+        <details class="reveal"><summary>What formats are supported?</summary><p>Instagram media is delivered in its original format (JPG for photos, MP4 for videos). With the upload tool you can convert images to JPG, PNG or WebP, and videos to MP4, WebM or MP3 audio, when the server supports it.</p></details>
+        <details class="reveal"><summary>Are stories and private accounts supported?</summary><p>No. Stories, highlights and content you are not authorized to access are not supported.</p></details>
+        <details class="reveal"><summary>Does InstaSave keep my files?</summary><p>Instagram downloads are streamed and not stored. Uploaded and converted files are deleted automatically after a short time, and you can delete them yourself at any moment. See the <a href="/privacy">Privacy Policy</a>.</p></details>
+        <details class="reveal"><summary>Is it okay to re-use downloaded content?</summary><p>Only download and share media you own or have permission to use. Respect copyright and the rights of the people shown in the content.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section section-tint" id="about">
+    <div class="container narrow center">
+      <h2 class="section-title reveal">About Us</h2>
+      <p class="about-text reveal">InstaSave is a small, privacy-minded tool for creators and brands who want a quick way to save the media they already own. We build on Instagram's official, permission-based API instead of scraping, so what you see is what you are allowed to download. We are transparent about the limits, and we would rather tell you something is not possible than pretend it is.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a class="logo" href="/"><span class="logo-mark"><svg class="icon"><use href="#i-download"/></svg></span><span class="logo-text">Insta<span>Save</span></span></a>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#about">About</a>
+      <a href="#" id="contactLink" hidden>Contact</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </nav>
+    <p class="legal">InstaSave is not affiliated with, endorsed by or sponsored by Instagram or Meta. Instagram is a trademark of Meta Platforms, Inc.</p>
+  </div>
+</footer>
+
+</body>
+</html>
